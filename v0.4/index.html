@@ -20,32 +20,48 @@
             color: red;
             font-size: 20px;            
         }
+        .game {
+            color: violet;
+            font-size:28px;
+        }
     </style> 
+    <script type="text/javascript">
+        function btnHello_click() {
+            // Single line comment
+            alert("Hello, world.");  // Alan hates the alert function. Do not use it.
+            /*
+               Block comment               
+            */
+         }         
+    </script>
 </head> 
+
 <body> 
-     <p class="name">
-     Anthony Giorgio
-     </p>
-     Now is the time for all good students to come to the aid of their web page. 
-     <br>    
-     <p class="footer"> 
-        <a href="http://validator.w3.org/#validate_by_input">Validate as HTML5</a> 
-     </p> 
+     <p class="name">Anthony Giorgio</p>
+     <p class="game">Javascript Adventure</p>
+
+
+    <br>
      <a href="mailto:Anthony.Giorgio@marist.edu">
      Email me!
      </a>
+    <br>
 
-     <p>This web page needs to be AT LEAST 20% cooler!"</p>
+    <textarea rows="8" cols="40">You are standing in a field, west of a house. There is a mailbox here.
+    </textarea>
 
-    Mane 6 ponies:
-     <ul>
-     <li>Rainbow Dash</li>
-     <li>Twilight Sparkle</li>
-     <li>Applejack</li>
-     <li>Fluttershy</li>
-     <li>Rarity</li>
-     <li>Pinkie Pie</li>
-     </ul>
+    <br>
+
+    <input type="button"
+             id = "btnHello"
+             name="btnHello"
+             value="Click Me" 
+             onclick="btnHello_click();" />
+
+
+     <p class="footer"> 
+        <a href="http://validator.w3.org/#validate_by_input">Validate as HTML5</a> 
+     </p> 
 </body> 
 
 </html>
