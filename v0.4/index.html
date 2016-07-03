@@ -32,6 +32,7 @@
 <script type="text/javascript">
 
 	var score = 0;
+	var location = "Start";
 	
 	var visitedNorth = false;
 	var visitedSouth = false;
@@ -40,6 +41,7 @@
 	
 	function btnNorth_click() {
 		var message = "Brrr!  It's cold here!"
+		location = "North";
 		if (visitedNorth == false) {
 			visitedNorth = true;
 			score += 5;
@@ -51,6 +53,7 @@
 
 	function btnSouth_click() {
 		var message = "Welcome, y'all."
+			location = "South";
 		if (visitedSouth == false) {
 			visitedSouth = true;
 			score += 5;
@@ -61,6 +64,7 @@
 
 	function btnEast_click() {
 		var message = "You can see the Atlantic Ocean."
+			location = "East";
 		if (visitedEast == false) {
 			visitedEast = true;
 			score += 5;
@@ -71,6 +75,7 @@
 	
 	function btnWest_click() {
 		var message = "Go west, young man."
+		location = "West";
 		if (visitedWest == false) {
 			visitedWest = true;
 			score += 5;
@@ -79,10 +84,9 @@
 		updateScore();
 	}
 	
-	/* Display the current location in the textarea */
 	function displayMessage(message) {
 		var textarea = document.getElementById("textarea");
-		textarea.value = message;
+		textarea.value = "Location: " + location + "\n\n" + message;
 	}
 	
 	function updateScore() {
