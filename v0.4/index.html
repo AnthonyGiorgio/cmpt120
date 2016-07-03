@@ -87,29 +87,20 @@
 	
 	function updateScore() {
 		var scoreArea = document.getElementById("score");
-		scoreArea.value = score;
+		scoreArea.textContent = "Score: " + score;
 	}
 
 </script>
 </head>
 
 <body>
-	<p class="name">Anthony Giorgio</p>
+	<p class="name"><a href="mailto:Anthony.Giorgio@marist.edu">Anthony Giorgio</a></p>
 	<p class="game">Javascript Adventure</p>
-
-
-	<br>
-	<a href="mailto:Anthony.Giorgio@marist.edu"> Email me! </a>
-	<br>
 
 	<textarea rows="8" cols="40" id="textarea">You are standing in a field, west of a house. There is a mailbox here.
     </textarea>
     
-    <p>Score:
-    <textarea rows="1" cols="3" id="score">0</textarea>
-    </p>
-
-	<br>
+    <p id="score">Score: 0</p>
 
 	<input type="button" id="btnNorth" name="btnNorth" value="North"
 		onclick="btnNorth_click();" />
