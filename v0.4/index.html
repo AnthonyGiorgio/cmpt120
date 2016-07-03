@@ -32,7 +32,7 @@
 <script type="text/javascript">
 
 	var score = 0;
-	var location = "Start";
+	var position = "Start";
 	
 	var visitedNorth = false;
 	var visitedSouth = false;
@@ -41,7 +41,7 @@
 	
 	function btnNorth_click() {
 		var message = "Brrr!  It's cold here!"
-		location = "North";
+		position = "North";
 		if (visitedNorth == false) {
 			visitedNorth = true;
 			score += 5;
@@ -53,7 +53,7 @@
 
 	function btnSouth_click() {
 		var message = "Welcome, y'all."
-			location = "South";
+			position = "South";
 		if (visitedSouth == false) {
 			visitedSouth = true;
 			score += 5;
@@ -64,7 +64,7 @@
 
 	function btnEast_click() {
 		var message = "You can see the Atlantic Ocean."
-			location = "East";
+			position = "East";
 		if (visitedEast == false) {
 			visitedEast = true;
 			score += 5;
@@ -75,7 +75,7 @@
 	
 	function btnWest_click() {
 		var message = "Go west, young man."
-		location = "West";
+		position = "West";
 		if (visitedWest == false) {
 			visitedWest = true;
 			score += 5;
@@ -86,12 +86,41 @@
 	
 	function displayMessage(message) {
 		var textarea = document.getElementById("textarea");
-		textarea.value = "Location: " + location + "\n\n" + message;
+		textarea.value = "Location: " + position + "\n\n" + message;
 	}
 	
 	function updateScore() {
 		var scoreArea = document.getElementById("score");
 		scoreArea.textContent = "Score: " + score;
+	}
+	
+	function btnCommand() {
+		var textArea = document.getElementById("textarea");
+		var commandBox = document.getElementById("commandBox");
+		var command = commandBox.value.toLowerCase();
+		
+		commandBox.value = "";
+		
+		switch (command) {
+		case "n":
+			btnNorth_click();
+			break;
+		case "s":
+			btnSouth_click();
+			break;
+		case "e":
+			btnEast_click();
+			break;
+		case "w":
+			btnWest_click();
+			break;
+		default:
+			textArea.value = "Unknown command";
+			break;
+		}
+		
+		
+		
 	}
 
 </script>
@@ -105,6 +134,11 @@
     </textarea>
     
     <p id="score">Score: 0</p>
+    
+    <p>Command:
+    <textarea rows="1" cols="20" id="commandBox"></textarea>
+    <input type="button" id="btnCommand" name="btnCommand" value="Go" onclick="btnCommand();" />
+    </p>
 
 	<input type="button" id="btnNorth" name="btnNorth" value="North"
 		onclick="btnNorth_click();" />
