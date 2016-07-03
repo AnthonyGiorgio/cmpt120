@@ -10,98 +10,89 @@
     Project 1 - My First Web Page
 -->
 <head>
-    <title>My first web page</title>
-    <meta http-equiv="Content-Type" content="text/html;charset=utf-8" /> 
-    <meta name="author"             content="Anthony Giorgio" /> 
+<title>My first web page</title>
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta name="author" content="Anthony Giorgio" />
 
-    <style> 
-        .footer {font-style: italic;} 
-        .name {
-            color: red;
-            font-size: 20px;            
-        }
-        .game {
-            color: violet;
-            font-size:28px;
-        }
-    </style> 
-    <script type="text/javascript">
-        function btnNorth_click() {
-            // Single line comment
-            alert("North");  // Alan hates the alert function. Do not use it.
-            /*
-               Block comment               
-            */
-         }         
+<style>
+.footer {
+	font-style: italic;
+}
 
-        function btnSouth_click() {
-            // Single line comment
-            alert("South");  // Alan hates the alert function. Do not use it.
-            /*
-               Block comment               
-            */
-         }         
+.name {
+	color: red;
+	font-size: 20px;
+}
 
-        function btnEast_click() {
-            // Single line comment
-            alert("East");  // Alan hates the alert function. Do not use it.
-            /*
-               Block comment               
-            */
-         }         
-        function btnWest_click() {
-            // Single line comment
-            alert("West.");  // Alan hates the alert function. Do not use it.
-            /*
-               Block comment               
-            */
-         }         
-    </script>
-</head> 
+.game {
+	color: violet;
+	font-size: 28px;
+}
+</style>
+<script type="text/javascript">
 
-<body> 
-     <p class="name">Anthony Giorgio</p>
-     <p class="game">Javascript Adventure</p>
+	var location;
+	
+
+	function btnNorth_click() {
+		var message = "Brrr!  It's cold here!"
+		displayMessage(message);
+	}
+
+	function btnSouth_click() {
+		var message = "Welcome, y'all."
+		displayMessage(message);
+	}
+
+	function btnEast_click() {
+		var message = "You can see the Atlantic Ocean."
+		displayMessage(message);
+	}
+	
+	function btnWest_click() {
+		var message = "Go west, young man."
+		displayMessage(message);
+	}
+	
+	/* Display the current location in the textarea */
+	function displayMessage(message) {
+		var textarea = document.getElementById("textarea");
+		textarea.value = message;
+	}
+
+</script>
+</head>
+
+<body>
+	<p class="name">Anthony Giorgio</p>
+	<p class="game">Javascript Adventure</p>
 
 
-    <br>
-     <a href="mailto:Anthony.Giorgio@marist.edu">
-     Email me!
-     </a>
-    <br>
+	<br>
+	<a href="mailto:Anthony.Giorgio@marist.edu"> Email me! </a>
+	<br>
 
-    <textarea rows="8" cols="40">You are standing in a field, west of a house. There is a mailbox here.
+	<textarea rows="8" cols="40" id="textarea">You are standing in a field, west of a house. There is a mailbox here.
     </textarea>
 
-    <br>
+	<br>
 
-    <input type="button"
-             id = "btnNorth"
-             name="btnNorth"
-             value="North" 
-             onclick="btnNorth_click();" />
+	<input type="button" id="btnNorth" name="btnNorth" value="North"
+		onclick="btnNorth_click();" />
 
-    <input type="button"
-             id = "btnSouth"
-             name="btnSouth"
-             value="South" 
-             onclick="btnSouth_click();" />
+	<input type="button" id="btnSouth" name="btnSouth" value="South"
+		onclick="btnSouth_click();" />
 
-    <input type="button"
-             id = "btnEast"
-             name="btnEast"
-             value="East" 
-             onclick="btnEast_click();" />
+	<input type="button" id="btnEast" name="btnEast" value="East"
+		onclick="btnEast_click();" />
 
-    <input type="button"
-             id = "btnWest"
-             name="btnWest"
-             value="West" 
-             onclick="btnWest_click();" />
+	<input type="button" id="btnWest" name="btnWest" value="West"
+		onclick="btnWest_click();" />
 
-     <p class="footer"> 
-        <a href="http://validator.w3.org/#validate_by_input">Validate as HTML5</a> 
-     </p> 
-</body> 
+	<p class="footer">
+		<a href="http://validator.w3.org/#validate_by_input">Validate as
+			HTML5</a>
+	</p>
+</body>
 
 </html>
