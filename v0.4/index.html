@@ -31,33 +31,63 @@
 </style>
 <script type="text/javascript">
 
-	var location;
+	var score = 0;
 	
-
+	var visitedNorth = false;
+	var visitedSouth = false;
+	var visitedEast = false;
+	var visitedWest = false;
+	
 	function btnNorth_click() {
 		var message = "Brrr!  It's cold here!"
+		if (visitedNorth == false) {
+			visitedNorth = true;
+			score += 5;
+		}
+		
 		displayMessage(message);
+		updateScore();
 	}
 
 	function btnSouth_click() {
 		var message = "Welcome, y'all."
+		if (visitedSouth == false) {
+			visitedSouth = true;
+			score += 5;
+		}
 		displayMessage(message);
+		updateScore();
 	}
 
 	function btnEast_click() {
 		var message = "You can see the Atlantic Ocean."
+		if (visitedEast == false) {
+			visitedEast = true;
+			score += 5;
+		}
 		displayMessage(message);
+		updateScore();
 	}
 	
 	function btnWest_click() {
 		var message = "Go west, young man."
+		if (visitedWest == false) {
+			visitedWest = true;
+			score += 5;
+		}
 		displayMessage(message);
+		updateScore();
 	}
 	
 	/* Display the current location in the textarea */
 	function displayMessage(message) {
 		var textarea = document.getElementById("textarea");
 		textarea.value = message;
+	}
+	
+	function updateScore() {
+		var scoreArea = document.getElementById("score");
+		scoreArea.value = score;
 	}
 
 </script>
@@ -74,6 +104,10 @@
 
 	<textarea rows="8" cols="40" id="textarea">You are standing in a field, west of a house. There is a mailbox here.
     </textarea>
+    
+    <p>Score:
+    <textarea rows="1" cols="3" id="score">0</textarea>
+    </p>
 
 	<br>
 
