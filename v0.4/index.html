@@ -30,115 +30,195 @@
 }
 </style>
 <script type="text/javascript">
-
 	var score = 0;
-	var position = "Start";
-	
-	var visitedNorth = false;
-	var visitedSouth = false;
-	var visitedEast = false;
-	var visitedWest = false;
-	
-	function btnNorth_click() {
-		var message = "Brrr!  It's cold here!"
-		position = "North";
-		if (visitedNorth == false) {
-			visitedNorth = true;
-			score += 5;
+	var position = 0;
+
+	/* Array indices */
+	var BAD = -1;
+	var NORTH = 0;
+	var SOUTH = 1;
+	var EAST = 2;
+	var WEST = 3;
+
+	var NORTH_CMD = "n";
+	var SOUTH_CMD = "s";
+	var EAST_CMD = "e";
+	var WEST_CMD = "w";
+
+	//Location prototype
+	function Location(_id, _name, _description) {
+		//Attributes
+		this.id = _id;
+		this.name = _name;
+		this.description = _description;
+		/* N, S, E, W */
+		this.validMoves;
+		this.visited = false;
+
+		this.toString = function() {
+			var message = "Location: " + this.name + "\n\n" + this.description;
+			return (message);
 		}
-		
+	}
+
+	var northPole = new Location(0, "North Pole", "Brrr!  It's cold here!");
+	var theSouth = new Location(1, "The South", "Welcome, y'all");
+	var outWest = new Location(2, "Out West", "Go west, young man.");
+	var eastCoast = new Location(3, "East Coast",
+			"You can see the Atlantic Ocean.");
+	var forest = new Location(4, "Forest", "The trees are dark and spooky here");
+	var desert = new Location(5, "Desert", "It's hot and dry here");
+
+	var locations = [ northPole, theSouth, outWest, eastCoast, forest, desert ];
+
+	northPole.validMoves = [ BAD, forest.id, BAD, BAD ];
+	theSouth.validMoves = [ desert.id, BAD, BAD, BAD ];
+	outWest.validMoves = [ BAD, BAD, desert.id, BAD ];
+	eastCoast.validMoves = [ BAD, BAD, BAD, desert.id ];
+	forest.validMoves = [ northPole.id, desert.id, BAD, BAD ];
+	desert.validMoves = [ forest.id, theSouth.id, eastCoast.id, outWest.id ];
+
+	/* Build a invalid move error message */
+	function badMove(_validMoves) {
+		var message = "Invalid move.  Valid moves are: ";
+
+		if (_validMoves[NORTH] !== -1) {
+			message += NORTH_CMD + " ";
+		}
+		if (_validMoves[SOUTH] !== -1) {
+			message += SOUTH_CMD + " ";
+		}
+		if (_validMoves[EAST] !== -2) {
+			message += EAST_CMD + " ";
+		}
+		if (_validMoves[WEST] !== -3) {
+			message += WEST_CMD + " ";
+		}
+
+		return message;
+	}
+
+	function navigate(_direction) {
+
+		var message;
+
+		switch (_direction) {
+		case NORTH_CMD:
+			if (locations[position].validMoves[NORTH] === BAD) {
+				badMove(locations[position].validMoves);
+			} else {
+				/* Move to the new location */
+				position = locations[position].validMoves[NORTH];
+
+			}
+			break;
+
+		case SOUTH_CMD:
+			if (locations[position].validMoves[SOUTH] === BAD) {
+				badMove(locations[position].validMoves);
+			} else {
+				/* Move to the new location */
+				position = locations[position].validMoves[SOUTH];
+				messgae = locations[position].toString();
+			}
+			break;
+
+		case EAST_CMD:
+			if (locations[position].validMoves[EAST] === BAD) {
+				badMove(locations[position].validMoves);
+			} else {
+				/* Move to the new location */
+				position = locations[position].validMoves[EAST];
+				message = locations[position].toString();
+			}
+			break;
+
+		case WEST_CMD:
+			if (locations[position].validMoves[WEST] === BAD) {
+				badMove(locations[position].validMoves);
+			} else {
+				/* Move to the new location */
+				position = locations[position].validMoves[WEST];
+				message = locations[position].toString();
+			}
+			break;
+
+		default:
+			message = "Bad navigation direction: " + direction;
+			break;
+		}
+
 		displayMessage(message);
 		updateScore();
+	}
+
+	function btnNorth_click() {
+		navigate(NORTH_CMD);
 	}
 
 	function btnSouth_click() {
-		var message = "Welcome, y'all."
-			position = "South";
-		if (visitedSouth == false) {
-			visitedSouth = true;
-			score += 5;
-		}
-		displayMessage(message);
-		updateScore();
+		navigate(SOUTH_CMD);
 	}
 
 	function btnEast_click() {
-		var message = "You can see the Atlantic Ocean."
-			position = "East";
-		if (visitedEast == false) {
-			visitedEast = true;
-			score += 5;
-		}
-		displayMessage(message);
-		updateScore();
+		navigate(EAST_CMD);
 	}
-	
+
 	function btnWest_click() {
-		var message = "Go west, young man."
-		position = "West";
-		if (visitedWest == false) {
-			visitedWest = true;
-			score += 5;
-		}
-		displayMessage(message);
-		updateScore();
+		navigate(WEST_CMD);
 	}
-	
-	function displayMessage(message) {
+
+	function displayMessage(_message) {
 		var textarea = document.getElementById("textarea");
-		textarea.value = "Location: " + position + "\n\n" + message;
+		textarea.value = _message;
 	}
-	
+
 	function updateScore() {
 		var scoreArea = document.getElementById("score");
 		scoreArea.textContent = "Score: " + score;
 	}
-	
+
 	function btnCommand() {
 		var textArea = document.getElementById("textarea");
 		var commandBox = document.getElementById("commandBox");
 		var command = commandBox.value.toLowerCase();
-		
+
+		/* Clear the command input box */
 		commandBox.value = "";
-		
+
 		switch (command) {
-		case "n":
-			btnNorth_click();
-			break;
-		case "s":
-			btnSouth_click();
-			break;
-		case "e":
-			btnEast_click();
-			break;
-		case "w":
-			btnWest_click();
+		case NORTH_CMD:
+		case SOUTH_CMD:
+		case EAST_CMD:
+		case WEST_CMD:
+			navigate(command);
 			break;
 		default:
-			textArea.value = "Unknown command";
+			textArea.value = "Unknown command.\n\n"
+					+ "Valid commands are N, n, S, s, E, e, W, w.";
 			break;
 		}
-		
-		
-		
-	}
 
+	}
 </script>
 </head>
 
 <body>
-	<p class="name"><a href="mailto:Anthony.Giorgio@marist.edu">Anthony Giorgio</a></p>
+	<p class="name">
+		<a href="mailto:Anthony.Giorgio@marist.edu">Anthony Giorgio</a>
+	</p>
 	<p class="game">JavaScript Adventure</p>
 
-	<textarea rows="8" cols="40" id="textarea">You are standing in a field, west of a house. There is a mailbox here.
-    </textarea>
-    
-    <p id="score">Score: 0</p>
-    
-    <p>Command:
-    <textarea rows="1" cols="20" id="commandBox"></textarea>
-    <input type="button" id="btnCommand" name="btnCommand" value="Go" onclick="btnCommand();" />
-    </p>
+	<textarea rows="8" cols="40" id="textarea" readonly>You are standing in a field, west of a house. There is a mailbox here.</textarea>
+
+	<p id="score">Score: 0</p>
+
+	<p>
+		Command:
+		<textarea rows="1" cols="20" id="commandBox"></textarea>
+		<input type="button" id="btnCommand" name="btnCommand" value="Go"
+			onclick="btnCommand();" />
+	</p>
 
 	<input type="button" id="btnNorth" name="btnNorth" value="North"
 		onclick="btnNorth_click();" />
