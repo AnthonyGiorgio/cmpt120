@@ -58,10 +58,13 @@
 		}
 
 		this.visit = function() {
+			position = this.id;
 			if (this.visited === false) {
 				this.visited = true;
 				score += 5;
 			}
+
+			return this.toString();
 		}
 	}
 
@@ -104,52 +107,49 @@
 		return message;
 	}
 
+	/* Navigate in a given direction */
 	function navigate(_direction) {
-
 		var message;
+		var newPosition;
 
 		switch (_direction) {
 		case NORTH_CMD:
-			if (locations[position].validMoves[NORTH] === BAD) {
+			newPosition = locations[position].validMoves[NORTH] 
+			if (newPosition === BAD) {
 				message = badMove(locations[position].validMoves);
 			} else {
 				/* Move to the new location */
-				position = locations[position].validMoves[NORTH];
-				locations[position].visit();
-				message = locations[position].toString();
+				message = locations[newPosition].visit();
 			}
 			break;
 
 		case SOUTH_CMD:
-			if (locations[position].validMoves[SOUTH] === BAD) {
+			newPosition = locations[position].validMoves[SOUTH] 
+			if (newPosition === BAD) {
 				message = badMove(locations[position].validMoves);
 			} else {
 				/* Move to the new location */
-				position = locations[position].validMoves[SOUTH];
-				locations[position].visit();
-				message = locations[position].toString();
+				message = locations[newPosition].visit();
 			}
 			break;
 
 		case EAST_CMD:
-			if (locations[position].validMoves[EAST] === BAD) {
+			newPosition = locations[position].validMoves[EAST] 
+			if (newPosition === BAD) {
 				message = badMove(locations[position].validMoves);
 			} else {
 				/* Move to the new location */
-				position = locations[position].validMoves[EAST];
-				locations[position].visit();
-				message = locations[position].toString();
+				message = locations[newPosition].visit();
 			}
 			break;
 
 		case WEST_CMD:
-			if (locations[position].validMoves[WEST] === BAD) {
+			newPosition = locations[position].validMoves[WEST] 
+			if (newPosition === BAD) {
 				message = badMove(locations[position].validMoves);
 			} else {
 				/* Move to the new location */
-				position = locations[position].validMoves[WEST];
-				locations[position].visit();
-				message = locations[position].toString();
+				message = locations[newPosition].visit();
 			}
 			break;
 
@@ -160,6 +160,16 @@
 
 		displayMessage(message);
 		updateScore();
+	}
+	
+	function displayMessage(_message) {
+		var textarea = document.getElementById("textarea");
+		textarea.value = _message;
+	}
+
+	function updateScore() {
+		var scoreArea = document.getElementById("score");
+		scoreArea.textContent = "Score: " + score;
 	}
 
 	function btnNorth_click() {
@@ -176,16 +186,6 @@
 
 	function btnWest_click() {
 		navigate(WEST_CMD);
-	}
-
-	function displayMessage(_message) {
-		var textarea = document.getElementById("textarea");
-		textarea.value = _message;
-	}
-
-	function updateScore() {
-		var scoreArea = document.getElementById("score");
-		scoreArea.textContent = "Score: " + score;
 	}
 
 	function btnCommand() {
@@ -213,14 +213,12 @@
 </script>
 </head>
 
-<body>
+<body onload="desert.visit()">
 	<p class="name">
 		<a href="mailto:Anthony.Giorgio@marist.edu">Anthony Giorgio</a>
 	</p>
 	<p class="game">JavaScript Adventure</p>
-
-	<textarea rows="8" cols="40" id="textarea" readonly>You are standing in a field, west of a house. There is a mailbox here.</textarea>
-
+	<textarea rows="8" cols="40" id="textarea" readonly></textarea>
 	<p id="score">Score: 0</p>
 
 	<p>
