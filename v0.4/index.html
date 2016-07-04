@@ -30,9 +30,6 @@
 }
 </style>
 <script type="text/javascript">
-	var score = 0;
-	var position = 0;
-
 	/* Array indices */
 	var BAD = -1;
 	var NORTH = 0;
@@ -70,6 +67,8 @@
 	var desert = new Location(5, "Desert", "It's hot and dry here");
 
 	var locations = [ northPole, theSouth, outWest, eastCoast, forest, desert ];
+	var score = 0;
+	var position = forest.id;
 
 	northPole.validMoves = [ BAD, forest.id, BAD, BAD ];
 	theSouth.validMoves = [ desert.id, BAD, BAD, BAD ];
@@ -80,18 +79,18 @@
 
 	/* Build a invalid move error message */
 	function badMove(_validMoves) {
-		var message = "Invalid move.  Valid moves are: ";
+		var message = "Invalid move.\n\nValid moves are: ";
 
-		if (_validMoves[NORTH] !== -1) {
+		if (_validMoves[NORTH] !== BAD) {
 			message += NORTH_CMD + " ";
 		}
-		if (_validMoves[SOUTH] !== -1) {
+		if (_validMoves[SOUTH] !== BAD) {
 			message += SOUTH_CMD + " ";
 		}
-		if (_validMoves[EAST] !== -2) {
+		if (_validMoves[EAST] !==  BAD) {
 			message += EAST_CMD + " ";
 		}
-		if (_validMoves[WEST] !== -3) {
+		if (_validMoves[WEST] !==  BAD) {
 			message += WEST_CMD + " ";
 		}
 
@@ -105,27 +104,27 @@
 		switch (_direction) {
 		case NORTH_CMD:
 			if (locations[position].validMoves[NORTH] === BAD) {
-				badMove(locations[position].validMoves);
+				message = badMove(locations[position].validMoves);
 			} else {
 				/* Move to the new location */
 				position = locations[position].validMoves[NORTH];
-
+				message = locations[position].toString();
 			}
 			break;
 
 		case SOUTH_CMD:
 			if (locations[position].validMoves[SOUTH] === BAD) {
-				badMove(locations[position].validMoves);
+				message = badMove(locations[position].validMoves);
 			} else {
 				/* Move to the new location */
 				position = locations[position].validMoves[SOUTH];
-				messgae = locations[position].toString();
+				message = locations[position].toString();
 			}
 			break;
 
 		case EAST_CMD:
 			if (locations[position].validMoves[EAST] === BAD) {
-				badMove(locations[position].validMoves);
+				message = badMove(locations[position].validMoves);
 			} else {
 				/* Move to the new location */
 				position = locations[position].validMoves[EAST];
@@ -135,7 +134,7 @@
 
 		case WEST_CMD:
 			if (locations[position].validMoves[WEST] === BAD) {
-				badMove(locations[position].validMoves);
+				message = badMove(locations[position].validMoves);
 			} else {
 				/* Move to the new location */
 				position = locations[position].validMoves[WEST];
@@ -144,7 +143,7 @@
 			break;
 
 		default:
-			message = "Bad navigation direction: " + direction;
+			message = "Bad navigation direction: " + _direction;
 			break;
 		}
 
@@ -195,7 +194,7 @@
 			break;
 		default:
 			textArea.value = "Unknown command.\n\n"
-					+ "Valid commands are N, n, S, s, E, e, W, w.";
+					+ "Valid commands are n, s, e, w.";
 			break;
 		}
 
