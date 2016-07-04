@@ -56,6 +56,13 @@
 			var message = "Location: " + this.name + "\n\n" + this.description;
 			return (message);
 		}
+
+		this.visit = function() {
+			if (this.visited === false) {
+				this.visited = true;
+				score += 5;
+			}
+		}
 	}
 
 	var northPole = new Location(0, "North Pole", "Brrr!  It's cold here!");
@@ -87,10 +94,10 @@
 		if (_validMoves[SOUTH] !== BAD) {
 			message += SOUTH_CMD + " ";
 		}
-		if (_validMoves[EAST] !==  BAD) {
+		if (_validMoves[EAST] !== BAD) {
 			message += EAST_CMD + " ";
 		}
-		if (_validMoves[WEST] !==  BAD) {
+		if (_validMoves[WEST] !== BAD) {
 			message += WEST_CMD + " ";
 		}
 
@@ -108,6 +115,7 @@
 			} else {
 				/* Move to the new location */
 				position = locations[position].validMoves[NORTH];
+				locations[position].visit();
 				message = locations[position].toString();
 			}
 			break;
@@ -118,6 +126,7 @@
 			} else {
 				/* Move to the new location */
 				position = locations[position].validMoves[SOUTH];
+				locations[position].visit();
 				message = locations[position].toString();
 			}
 			break;
@@ -128,6 +137,7 @@
 			} else {
 				/* Move to the new location */
 				position = locations[position].validMoves[EAST];
+				locations[position].visit();
 				message = locations[position].toString();
 			}
 			break;
@@ -138,6 +148,7 @@
 			} else {
 				/* Move to the new location */
 				position = locations[position].validMoves[WEST];
+				locations[position].visit();
 				message = locations[position].toString();
 			}
 			break;
