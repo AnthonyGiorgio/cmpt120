@@ -49,7 +49,7 @@
 		this.name = _name;
 		this.description = _description;
 		/* N, S, E, W */
-		this.validMoves;
+		this.validMoves = [ BAD, BAD, BAD, BAD ];
 		this.visited = false;
 
 		this.toString = function() {
@@ -64,7 +64,8 @@
 				score += 5;
 			}
 
-			return this.toString();
+			displayMessage(this.toString());
+			updateScore();
 		}
 	}
 
@@ -78,7 +79,7 @@
 
 	var locations = [ northPole, theSouth, outWest, eastCoast, forest, desert ];
 	var score = 0;
-	var position = forest.id;
+	var position;
 
 	northPole.validMoves = [ BAD, forest.id, BAD, BAD ];
 	theSouth.validMoves = [ desert.id, BAD, BAD, BAD ];
@@ -104,7 +105,7 @@
 			message += WEST_CMD + " ";
 		}
 
-		return message;
+		displayMessage(message);
 	}
 
 	/* Navigate in a given direction */
@@ -114,54 +115,51 @@
 
 		switch (_direction) {
 		case NORTH_CMD:
-			newPosition = locations[position].validMoves[NORTH] 
+			newPosition = locations[position].validMoves[NORTH]
 			if (newPosition === BAD) {
-				message = badMove(locations[position].validMoves);
+				badMove(locations[position].validMoves);
 			} else {
 				/* Move to the new location */
-				message = locations[newPosition].visit();
+				locations[newPosition].visit();
 			}
 			break;
 
 		case SOUTH_CMD:
-			newPosition = locations[position].validMoves[SOUTH] 
+			newPosition = locations[position].validMoves[SOUTH]
 			if (newPosition === BAD) {
-				message = badMove(locations[position].validMoves);
+				badMove(locations[position].validMoves);
 			} else {
 				/* Move to the new location */
-				message = locations[newPosition].visit();
+				locations[newPosition].visit();
 			}
 			break;
 
 		case EAST_CMD:
-			newPosition = locations[position].validMoves[EAST] 
+			newPosition = locations[position].validMoves[EAST]
 			if (newPosition === BAD) {
-				message = badMove(locations[position].validMoves);
+				badMove(locations[position].validMoves);
 			} else {
 				/* Move to the new location */
-				message = locations[newPosition].visit();
+				locations[newPosition].visit();
 			}
 			break;
 
 		case WEST_CMD:
-			newPosition = locations[position].validMoves[WEST] 
+			newPosition = locations[position].validMoves[WEST]
 			if (newPosition === BAD) {
-				message = badMove(locations[position].validMoves);
+				badMove(locations[position].validMoves);
 			} else {
 				/* Move to the new location */
-				message = locations[newPosition].visit();
+				locations[newPosition].visit();
 			}
 			break;
 
 		default:
-			message = "Bad navigation direction: " + _direction;
+			displayMessage("Bad navigation direction: " + _direction);
 			break;
 		}
-
-		displayMessage(message);
-		updateScore();
 	}
-	
+
 	function displayMessage(_message) {
 		var textarea = document.getElementById("textarea");
 		textarea.value = _message;
