@@ -50,10 +50,14 @@
 	var SOUTH_CMD = "s";
 	var EAST_CMD = "e";
 	var WEST_CMD = "w";
-	var HELP_CMD = "h";
-	var INVENTORY_CMD = "i";
+	var HELP_CMD = "help";
+	var INVENTORY_CMD = "inv";
+	var TAKE_CMD = "take";
 
-	var validCommands = "Valid commands are n, s, e, w, i, h.";
+	var commands = [ NORTH_CMD, SOUTH_CMD, EAST_CMD, WEST_CMD, HELP_CMD,
+			INVENTORY_CMD, TAKE_CMD ];
+
+	var validCommands = "Valid commands are:\n\n" + commands.toString();
 
 	var score = 0;
 	var inventory = [];
@@ -135,6 +139,7 @@
 		document.getElementById("btnSouth").disabled = (_validMoves[SOUTH] === BAD);
 		document.getElementById("btnEast").disabled = (_validMoves[EAST] === BAD);
 		document.getElementById("btnWest").disabled = (_validMoves[WEST] === BAD);
+		document.getElementById("btnTake").disabled = true; /* FIXME */
 	}
 
 	function btnNorth_click() {
@@ -151,6 +156,14 @@
 
 	function btnWest_click() {
 		navigate(WEST_CMD);
+	}
+
+	function btnHelp_click() {
+		help();
+	}
+
+	function btnInventory_click() {
+		inventory();
 	}
 
 	function btnCommand() {
@@ -170,9 +183,11 @@
 		case INVENTORY_CMD:
 			inventory();
 			break;
+		case TAKE_CMD:
+			take();
+			break;
 		default:
-			displayMessage("Unknown command: '" + commandText + "'\n\n");
-			displayMessage(validCommands);
+			displayMessage("Unknown command: '" + commandText + "'\n\n" + validCommands);
 			break;
 		}
 
@@ -181,8 +196,7 @@
 	}
 
 	function help() {
-		displayMessage("Welcome to Javascript adventure!\n\n");
-		displayMessage(validCommands);
+		displayMessage("Welcome to Javascript adventure!\n\n" + validCommands);
 	}
 
 	function init() {
@@ -221,6 +235,15 @@
 
 	<input type="button" id="btnWest" name="btnWest" value="West"
 		onclick="btnWest_click();" />
+
+	<input type="button" id="btnWest" name="btnInventory" value="Inventory"
+		onclick="btnInventory_click();" />
+
+	<input type="button" id="btnTake" name="btnTake" value="Take"
+		onclick="btnTake_click();" />
+
+	<input type="button" id="btnHelp" name="btnHelp" value="Help"
+		onclick="btnHelp_click();" />
 
 	<p class="footer">
 		<a href="http://validator.w3.org/#validate_by_input">Validate as
