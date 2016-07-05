@@ -5,9 +5,9 @@
     Anthony Giorgio
     Marist College
     CMPT 120
-    July 1, 2016
+    July 5, 2016
     Introduction to Programming
-    Project 3 - Game v0.4
+    Project 4 - Game v0.6
 -->
 <head>
 <title>JavaScript Adventure</title>
@@ -29,64 +29,34 @@
 	font-size: 28px;
 }
 </style>
+<script type="text/javascript" src="locations.js"></script>
 <script type="text/javascript">
-	/* Array indices */
-	var BAD = -1;
-	var NORTH = 0;
-	var SOUTH = 1;
-	var EAST = 2;
-	var WEST = 3;
+	function Item(_id, _name, _description) {
+		this.id = _id;
+		this.name = _name;
+		this.description = _description;
+
+		this.toString = function() {
+			displayMessage(this.name + "\n\n" + this.description);
+		}
+	}
+
+	var sword = new Item(0, "sword", "A two handed broadsword");
+	var helmet = new Item(1, "helmet", "A horned viking helmet");
+	var gold = new Item(2, "gold", "A bag of gold coins");
 
 	/* Command values */
 	var NORTH_CMD = "n";
 	var SOUTH_CMD = "s";
 	var EAST_CMD = "e";
 	var WEST_CMD = "w";
+	var HELP_CMD = "h";
+	var INVENTORY_CMD = "i";
 
-	function Location(_id, _name, _description) {
-		this.id = _id;
-		this.name = _name;
-		this.description = _description;
-		/* N, S, E, W */
-		this.validMoves = [ BAD, BAD, BAD, BAD ];
-		this.visited = false;
+	var validCommands = "Valid commands are n, s, e, w, i, h.";
 
-		this.toString = function() {
-			var message = "Location: " + this.name + "\n\n" + this.description;
-			return (message);
-		}
-
-		this.visit = function() {
-			playerLocation = this.id;
-			if (this.visited === false) {
-				this.visited = true;
-				score += 5;
-			}
-
-			displayMessage(this.toString());
-			toggleButtons(this.validMoves);
-			updateScore();
-		}
-	}
-
-	var northPole = new Location(0, "North Pole", "Brrr!  It's cold here!");
-	var theSouth = new Location(1, "The South", "Welcome, y'all");
-	var outWest = new Location(2, "Out West", "Go west, young man.");
-	var eastCoast = new Location(3, "East Coast",
-			"You can see the Atlantic Ocean.");
-	var forest = new Location(4, "Forest", "The trees are dark and spooky here");
-	var desert = new Location(5, "Desert", "It's hot and dry here");
-
-	var locations = [ northPole, theSouth, outWest, eastCoast, forest, desert ];
 	var score = 0;
 	var playerLocation;
-
-	northPole.validMoves = [ BAD, forest.id, BAD, BAD ];
-	theSouth.validMoves = [ desert.id, BAD, BAD, BAD ];
-	outWest.validMoves = [ BAD, BAD, desert.id, BAD ];
-	eastCoast.validMoves = [ BAD, BAD, BAD, desert.id ];
-	forest.validMoves = [ northPole.id, desert.id, BAD, BAD ];
-	desert.validMoves = [ forest.id, theSouth.id, eastCoast.id, outWest.id ];
 
 	function printBadMoveMessage(_validMoves) {
 		var message = "Invalid move.\n\nValid moves are: ";
@@ -193,19 +163,38 @@
 		case WEST_CMD:
 			navigate(commandText);
 			break;
+		case HELP_CMD:
+			help();
+			break;
+		case INVENTORY_CMD:
+			inventory();
+			break;
 		default:
-			displayMessage("Unknown command: '" + commandText + "'\n\n"
-					+ "Valid commands are n, s, e, w.");
+			displayMessage("Unknown command: '" + commandText + "'\n\n");
+			displayMessage(validCommands);
 			break;
 		}
 
 		/* Clear the command input box */
 		commandBox.value = "";
 	}
+
+	function help() {
+		displayMessage("Welcome to Javascript adventure!\n\n");
+		displayMessage(validCommands);
+	}
+
+	function init() {
+		desert.visit();
+	}
+
+	function inventory() {
+
+	}
 </script>
 </head>
 
-<body onload="desert.visit()">
+<body onload="init()">
 	<p class="name">
 		<a href="mailto:Anthony.Giorgio@marist.edu">Anthony Giorgio</a>
 	</p>
