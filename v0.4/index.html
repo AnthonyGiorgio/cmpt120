@@ -30,6 +30,7 @@
 }
 </style>
 <script type="text/javascript">
+
 	/* Array indices */
 	var BAD = -1;
 	var NORTH = 0;
@@ -37,14 +38,13 @@
 	var EAST = 2;
 	var WEST = 3;
 
+	/* Command values */
 	var NORTH_CMD = "n";
 	var SOUTH_CMD = "s";
 	var EAST_CMD = "e";
 	var WEST_CMD = "w";
 
-	//Location prototype
 	function Location(_id, _name, _description) {
-		//Attributes
 		this.id = _id;
 		this.name = _name;
 		this.description = _description;
@@ -58,13 +58,14 @@
 		}
 
 		this.visit = function() {
-			position = this.id;
+			playerLocation = this.id;
 			if (this.visited === false) {
 				this.visited = true;
 				score += 5;
 			}
 
 			displayMessage(this.toString());
+			toggleButtons(this.validMoves);
 			updateScore();
 		}
 	}
@@ -79,7 +80,7 @@
 
 	var locations = [ northPole, theSouth, outWest, eastCoast, forest, desert ];
 	var score = 0;
-	var position;
+		var playerLocation;
 
 	northPole.validMoves = [ BAD, forest.id, BAD, BAD ];
 	theSouth.validMoves = [ desert.id, BAD, BAD, BAD ];
@@ -110,14 +111,11 @@
 
 	/* Navigate in a given direction */
 	function navigate(_direction) {
-		var message;
-		var newPosition;
-
 		switch (_direction) {
 		case NORTH_CMD:
-			newPosition = locations[position].validMoves[NORTH]
+			var newPosition = locations[playerLocation].validMoves[NORTH]
 			if (newPosition === BAD) {
-				badMove(locations[position].validMoves);
+				badMove(locations[playerLocation].validMoves);
 			} else {
 				/* Move to the new location */
 				locations[newPosition].visit();
@@ -125,9 +123,9 @@
 			break;
 
 		case SOUTH_CMD:
-			newPosition = locations[position].validMoves[SOUTH]
+			var newPosition = locations[playerLocation].validMoves[SOUTH]
 			if (newPosition === BAD) {
-				badMove(locations[position].validMoves);
+				badMove(locations[playerLocation].validMoves);
 			} else {
 				/* Move to the new location */
 				locations[newPosition].visit();
@@ -135,9 +133,9 @@
 			break;
 
 		case EAST_CMD:
-			newPosition = locations[position].validMoves[EAST]
+			var newPosition = locations[playerLocation].validMoves[EAST]
 			if (newPosition === BAD) {
-				badMove(locations[position].validMoves);
+				badMove(locations[playerLocation].validMoves);
 			} else {
 				/* Move to the new location */
 				locations[newPosition].visit();
@@ -145,9 +143,9 @@
 			break;
 
 		case WEST_CMD:
-			newPosition = locations[position].validMoves[WEST]
+			var newPosition = locations[playerLocation].validMoves[WEST]
 			if (newPosition === BAD) {
-				badMove(locations[position].validMoves);
+				badMove(locations[playerLocation].validMoves);
 			} else {
 				/* Move to the new location */
 				locations[newPosition].visit();
@@ -161,13 +159,18 @@
 	}
 
 	function displayMessage(_message) {
-		var textarea = document.getElementById("textarea");
-		textarea.value = _message;
+		document.getElementById("textarea").value = _message;
 	}
 
 	function updateScore() {
-		var scoreArea = document.getElementById("score");
-		scoreArea.textContent = "Score: " + score;
+		document.getElementById("score").textContent = "Score: " + score;
+	}
+
+	function toggleButtons(_validMoves) {
+		document.getElementById("btnNorth").disabled = (_validMoves[NORTH] === BAD);
+		document.getElementById("btnSouth").disabled = (_validMoves[SOUTH] === BAD);
+		document.getElementById("btnEast").disabled = (_validMoves[EAST] === BAD);
+		document.getElementById("btnWest").disabled = (_validMoves[WEST] === BAD);
 	}
 
 	function btnNorth_click() {
@@ -187,14 +190,9 @@
 	}
 
 	function btnCommand() {
-		var textArea = document.getElementById("textarea");
 		var commandBox = document.getElementById("commandBox");
-		var command = commandBox.value.toLowerCase();
-
-		/* Clear the command input box */
-		commandBox.value = "";
-
-		switch (command) {
+		
+		switch (commandBox.value.toLowerCase()) {
 		case NORTH_CMD:
 		case SOUTH_CMD:
 		case EAST_CMD:
@@ -202,11 +200,13 @@
 			navigate(command);
 			break;
 		default:
-			textArea.value = "Unknown command.\n\n"
+			document.getElementById("textarea").value = "Unknown command.\n\n"
 					+ "Valid commands are n, s, e, w.";
 			break;
 		}
-
+		
+		/* Clear the command input box */
+		commandBox.value = "";
 	}
 </script>
 </head>
