@@ -30,7 +30,6 @@
 }
 </style>
 <script type="text/javascript">
-
 	/* Array indices */
 	var BAD = -1;
 	var NORTH = 0;
@@ -80,7 +79,7 @@
 
 	var locations = [ northPole, theSouth, outWest, eastCoast, forest, desert ];
 	var score = 0;
-		var playerLocation;
+	var playerLocation;
 
 	northPole.validMoves = [ BAD, forest.id, BAD, BAD ];
 	theSouth.validMoves = [ desert.id, BAD, BAD, BAD ];
@@ -89,8 +88,7 @@
 	forest.validMoves = [ northPole.id, desert.id, BAD, BAD ];
 	desert.validMoves = [ forest.id, theSouth.id, eastCoast.id, outWest.id ];
 
-	/* Build a invalid move error message */
-	function badMove(_validMoves) {
+	function printBadMoveMessage(_validMoves) {
 		var message = "Invalid move.\n\nValid moves are: ";
 
 		if (_validMoves[NORTH] !== BAD) {
@@ -109,15 +107,13 @@
 		displayMessage(message);
 	}
 
-	/* Navigate in a given direction */
 	function navigate(_direction) {
 		switch (_direction) {
 		case NORTH_CMD:
 			var newPosition = locations[playerLocation].validMoves[NORTH]
 			if (newPosition === BAD) {
-				badMove(locations[playerLocation].validMoves);
+				printBadMoveMessage(locations[playerLocation].validMoves);
 			} else {
-				/* Move to the new location */
 				locations[newPosition].visit();
 			}
 			break;
@@ -125,9 +121,8 @@
 		case SOUTH_CMD:
 			var newPosition = locations[playerLocation].validMoves[SOUTH]
 			if (newPosition === BAD) {
-				badMove(locations[playerLocation].validMoves);
+				printBadMoveMessage(locations[playerLocation].validMoves);
 			} else {
-				/* Move to the new location */
 				locations[newPosition].visit();
 			}
 			break;
@@ -135,9 +130,8 @@
 		case EAST_CMD:
 			var newPosition = locations[playerLocation].validMoves[EAST]
 			if (newPosition === BAD) {
-				badMove(locations[playerLocation].validMoves);
+				printBadMoveMessage(locations[playerLocation].validMoves);
 			} else {
-				/* Move to the new location */
 				locations[newPosition].visit();
 			}
 			break;
@@ -145,9 +139,8 @@
 		case WEST_CMD:
 			var newPosition = locations[playerLocation].validMoves[WEST]
 			if (newPosition === BAD) {
-				badMove(locations[playerLocation].validMoves);
+				printBadMoveMessage(locations[playerLocation].validMoves);
 			} else {
-				/* Move to the new location */
 				locations[newPosition].visit();
 			}
 			break;
@@ -191,20 +184,21 @@
 
 	function btnCommand() {
 		var commandBox = document.getElementById("commandBox");
-		
-		switch (commandBox.value.toLowerCase()) {
+		var commandText = commandBox.value.toLowerCase();
+
+		switch (commandText) {
 		case NORTH_CMD:
 		case SOUTH_CMD:
 		case EAST_CMD:
 		case WEST_CMD:
-			navigate(command);
+			navigate(commandText);
 			break;
 		default:
-			document.getElementById("textarea").value = "Unknown command.\n\n"
-					+ "Valid commands are n, s, e, w.";
+			displayMessage("Unknown command: '" + commandText + "'\n\n"
+					+ "Valid commands are n, s, e, w.");
 			break;
 		}
-		
+
 		/* Clear the command input box */
 		commandBox.value = "";
 	}
