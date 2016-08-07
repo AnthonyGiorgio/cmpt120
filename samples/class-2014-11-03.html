@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+   <head>
+      <title>
+         Bases 2, 10, and 16
+      </title>
+      <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+      <script type="text/javascript">
+         // Globals
+
+         //
+         // number prototype/class
+         //
+         function number() {
+            // Attributes (adjectives)
+            this.valueBase2  = "";
+            this.valueBase10 = "";
+            this.valueBase16 = "";
+            
+            // Methods (verbs)
+            this.display = function() {
+                              alert(this.valueBase2  + "(base 2) "  + 
+                                    this.valueBase10 + "(base 10) " + 
+                                    this.valueBase16 + "(base 16)");
+                           }
+         }
+
+         function init() {
+            var someNum = new number();
+            someNum.valueBase10 = "8466";
+            someNum.valueBase16 = "2112";
+            someNum.valueBase2  = "0010000100010010";
+            someNum.display();
+            
+            var otherNum = new number();
+            otherNum.valueBase10 = "007";
+            otherNum.valueBase16 = "7";
+            otherNum.valueBase2  = "0111";
+            otherNum.display();            
+            
+            var anyNum = null;
+            for (var i=0; i<9; i++) {
+               anyNum = new number();
+               anyNum.valueBase2  = "this is " + i; 
+               anyNum.valueBase10 = "this is " + i;
+               anyNum.valueBase16 = "this is " + i;
+               anyNum.display();
+            }
+         }
+      </script>
+   </head>
+   <body onload="init();">
+   </body>
+</html>
