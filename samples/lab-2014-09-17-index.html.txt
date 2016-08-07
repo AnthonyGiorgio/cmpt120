@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+   <head>
+      <title>
+         Alternation with IF
+      </title>
+      <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+      <script type="text/javascript">
+         function ifTest() {
+            var favoriteNumber = 8675309;
+            var targetTextArea = document.getElementById("taMain");               
+            if (favoriteNumber > 1024) {
+               // alert("(true) That's a large number.");
+               targetTextArea.value = "(true) That's a large number.";
+            } else {
+               // alert("(false) That's a small number.");
+               targetTextArea.value = "(false) That's a small number.";               
+            }
+         }
+         function varTest() {
+            // var if = 8675309;  NO! You cannot use reserved words as identifiers.
+            var favoriteNumber = 8675309;
+            alert(favoriteNumber);
+         }
+      </script>
+   </head>
+   <body>
+      <input type="button"
+             value="IF test" 
+             onclick="ifTest();" />             
+
+      <input type="button"
+             value="VAR test" 
+             onclick="varTest();" />             
+
+       <br>
+       <br>
+
+       <textarea rows="5" cols="20" id="taMain">This is some text.
+       </textarea>
+   </body>
+</html>

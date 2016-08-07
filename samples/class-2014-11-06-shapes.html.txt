@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html>
+   <head>
+      <title>
+         Shapes
+      </title>
+      <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+      <script type="text/javascript">
+
+         /* Our class hierarchy:
+                                     Shape
+                                     /  \   
+                                    /    \
+                              Rectangle Circle
+                                  /   
+                                 /
+                              Square
+         */
+
+
+         //
+         // Shape BASE class (prototype)
+         //
+         function Shape() {
+            // Attributes / Adjectives / HAS-A properties
+            this.name  = "";
+            this.color = "";
+            
+            // Methods (verbs)
+            this.toString = function() {
+                               return "[Shape: name:" + this.name + " color:" + this.color + "]";
+                            }
+         }
+
+
+         //
+         // Rectangle SUBclass of Shape
+         //
+         function Rectangle() {
+            // Altrernate syntax for establishing our BASE class:
+            // this.base = Shape;   // Establish that we are a subclass of Shape.
+            // this.base();         // Call our base class constructor.
+
+            // Rectangle-spepcific Attributes / Adjectives / HAS-A properties
+            this.height = 0;
+            this.width  = 0;
+
+            // Override our parent class's toString() with our own Rectangle-spepcific method/verb
+            this.toString = function() {
+                                 return "[Rectangle: name:" + this.name + 
+                                        " color:" + this.color +
+                                        " height:" + this.height +
+                                        " width:" + this.width + "]";
+                            }
+         }
+         Rectangle.prototype = new Shape;                // A Rectangle IS-A Shape (because of inheritance)
+         Rectangle.prototype.constructor = Rectangle;    // but we want it constructed as a Rectangle.
+
+         // Note: Directly assigning to SomeName.prototype removes its original prototype's "constructor" property. 
+         // As a result, new Rectangle() IS-A Shape instead of our expected Rectangle. That's why we "put back" 
+         // the original prototype's constructor after we establish the inheritance chain.
+
+
+         //
+         // Circle SUBclass of Shape
+         //
+         function Circle() {
+            // Circle-spepcific Attributes / Adjectives / HAS-A properties
+            this.radius = 0;
+
+            // Override our parent class's toString() with our own Rectangle-spepcific method/verb
+            this.toString = function() {
+                                 return "[Circle: name:" + this.name + 
+                                        " color:" + this.color +
+                                        " radius:" + this.radius + "]";
+                            }
+         }
+         Circle.prototype = new Shape;                // A Circle IS-A Shape (because of inheritance)
+         Circle.prototype.constructor = Circle;       // but we want it constructed as a Circle.
+
+
+         //
+         // Square SUBclass of Rectangle
+         //
+         function Square(side) {
+            // Set are attributes inherited from Rectangle.
+            this.height = side;
+            this.width  = side;
+            
+            // No need to override our inherited toString, as it is fine as-is.
+         }
+         Square.prototype = new Rectangle;         // A Square IS-A Rectangle (because of inheritance)
+         Square.prototype.constructor = Square;    // but we want it constructed as a Square.
+
+
+         //
+         // Utility functions
+         //
+         function display(msg) {
+            document.getElementById("txtDisplay").value += "\n" + msg;
+         }
+
+         function init() {
+            var myShape = new Shape();
+            myShape.name = "my shape";
+            myShape.color = "blue;"
+            display(myShape.toString());
+            
+            var myRectangle = new Rectangle();
+            myRectangle.name = "my rectangle";
+            myRectangle.color = "green";
+            myRectangle.height = 10;
+            myRectangle.width  = 12;
+            display(myRectangle);               // Note that toString() is called implicitly here. Don't do that.
+
+            var myCircle = new Circle();   
+            myCircle.name = "my circle";
+            myCircle.color = "purple";
+            myCircle.radius = 42;
+            display(myCircle.toString());  
+
+            var mySquare = new Square(2112);    // Note the use of a parameter in the constructor call.
+            mySquare.name = "my square";
+            mySquare.color = "red";
+            display(mySquare);            // Note that toString() is called implicitly here. Don't do that.
+            
+            // Look at the Square hierarchy with the internal __proto__ property. (Be careful!)
+            display("");
+            display("Square hierarchy:");
+            display("square");
+            display("square's parent " + mySquare.__proto__);
+            display("square's parent's parent " + mySquare.__proto__.__proto__);            
+            display("square's parent's parent's parent " + mySquare.__proto__.__proto__.__proto__);                        
+         }         
+      </script>
+   </head>
+   <body onload="init();">
+      <textarea id="txtDisplay" cols="64" rows="16"></textarea>
+   </body>
+</html>

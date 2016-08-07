@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+   <head>
+      <title>
+         Second Web Page
+      </title>
+      <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+      <script type="text/javascript">
+         function btnHello_click() {
+            // JavaScript comment: single line
+
+            /*
+               JavaScript comment: block
+            */
+
+            // Assign our favorite number (which is 42) to a variable named "favoriteNumber". (That is a good variable name.)
+            var favoriteNumber = 42;
+            // At this point, favoriteNumber is an alias to a location in the computer's memory
+            // which contains the integer value 42.
+            alert(favoriteNumber);
+
+
+            // Assign our favorite teacher (which is Alan) to a variable named "ta". (That is a bad variable name.)
+            var ta = "Alan";
+            // At this point, ta is an alias to a location in the computer's memory
+            // which contains the text (or string) value "Alan".
+            alert(ta);
+
+
+            // The next non-comment line find the text area in the DOM
+            // and assign it some new text; all in one line of code.
+            document.getElementById("taMain").value = "Hello, world";
+            // That works, but we could make it more easily read and understood
+            // by breaking it up into its component parts; which we will no do:
+
+            // 1. Assign the message we want to display to a variable named "message". (This is a good variable name.)
+            var message = "Hello, world.";
+
+            // 2. Find the text area in the DOM and assign it to a variable named "targetTextArea".
+            var targetTextArea = document.getElementById("taMain");
+
+            // 3. Finally, assign the message to the text (the "value" attribute) of the DOM's text area.
+            targetTextArea.value = message;
+         }
+      </script>
+      <style>
+         .footer {color: purple; font-weight: bold;}
+      </style>
+   </head>
+   <body>
+      <h1>
+          Some of my favorite things
+          <!--
+             HTML comments - only block comments are available.
+                             There are no single-line comments in HTML.
+          -->
+      </h1>
+
+      <ol>
+         <li>item 1</li>
+         <li>item 2</li>
+         <li>item 3</li>
+      </ol>
+
+      <ul>
+         <li>item 1</li>
+         <li>item 2</li>
+         <li>item 3</li>
+      </ul>
+
+      <textarea rows="5"
+                cols="32"
+                id = "taMain"
+                name="taMain">You are standing in a field,
+west of a house. There is a mailbox here.
+      </textarea>
+
+      <br />
+
+      <input type="button"
+             id = "btnHello"
+             name="btnHello"
+             value="Click Me"
+             onclick="btnHello_click();" />
+
+      <p class="footer">
+         Copyright 2014 - No Rights Reserved
+      </p>
+   </body>
+</html>

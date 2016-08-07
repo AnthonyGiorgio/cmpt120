@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+   <head>
+      <title>
+         Scope Tester
+      </title>
+      <script type="text/javascript">
+         //
+         // Globals
+         //
+         var z = "goodbye";
+         
+         function main() {
+            one();
+            two();
+         }
+         
+         function doAlerts(val1, val2) {
+            alert(val1 + " " + val2 + " " + z);
+         }
+         
+         function one(){
+            var x = 12;
+            var y = "hello";            
+            doAlerts(x, y);
+         }
+
+         function two(){
+            var x = "No NDAs!";
+            var y = 42;            
+            doAlerts(x, y);
+         }
+      </script>
+   </head>
+   <body onload="main();">
+      <h1>
+          Scope Tester
+      </h1>
+   </body>
+</html>

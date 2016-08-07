@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html>
+   <head>
+      <title>
+         Alan's Game
+      </title>
+      <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+      <script type="text/javascript">
+         //
+         // Global Variables
+         //         
+         var currentLoc = 0;
+         var score = 0;
+         var navigationErrorCount = 0;
+         var sarcasmThreshold = 5;
+         
+         var hasVisitedLoc0 = false;
+         var hasVisitedLoc1 = false;
+         var hasVisitedLoc2 = false;
+         var hasVisitedLoc3 = false;
+         var hasVisitedLoc4 = false;
+                  
+         //
+         // Initialization
+         //
+         function init() {
+            look();
+         }
+         
+         //
+         // Directional Button Event Handlers
+         //         
+         function btnNorth_click() {
+            if (currentLoc === 0) {
+               currentLoc = 1;
+               look();               
+            } else {
+              if (currentLoc === 3) {
+                 currentLoc = 0;
+                 look();            
+              } else {
+                 navigationError(); 
+              }
+            }            
+         }
+
+         function btnSouth_click() {
+            if (currentLoc === 1) {
+               currentLoc = 0;
+               look();
+            } else {
+              if (currentLoc === 0) {
+                 currentLoc = 3;
+                 look();
+              } else {
+                 navigationError(); 
+              }
+            }
+         }
+
+         function btnEast_click() {
+            if (currentLoc === 4) {
+               currentLoc = 0;
+               look();
+            } else {
+              if (currentLoc === 0) {
+                 currentLoc = 2;
+                 look();
+              } else {
+                 navigationError(); 
+              }
+            }
+         }
+
+         function btnWest_click() {
+            if (currentLoc === 2) {
+               currentLoc = 0;
+               look();
+            } else {
+              if (currentLoc === 0) {
+                 currentLoc = 4;
+                 look();
+              } else {
+                 navigationError(); 
+              }
+            }
+         }
+                  
+         //
+         // Story / Locale Functions
+         //
+         function look() {
+            var desc = "";
+            switch(currentLoc) {
+               case 0: desc = "0. You are in Sheldon's and Leonard's apartment.";
+                       break;
+               case 1: desc = "1. You are standing by the stairs";
+                       break; 
+               case 2: desc = "2. Welcome to the Cheesecake Factory. Please wait to be seated.";
+                       break;
+               case 3: desc = "3. Say hi to Stuart at his (not burned) Comic book store.";
+                       break;
+               case 4: desc = "4. (knock, knock knock) Penny!";
+                       break;
+               default: desc = "You cannot go that way";
+            }
+            checkScore();
+            desc = desc + "\n" + "Score: " + score ;
+            displayMessage(desc);
+         }
+
+         function navigationError() {
+            navigationErrorCount = navigationErrorCount + 1;
+            if (navigationErrorCount < sarcasmThreshold) {
+               displayMessage("You cannot go that way.");
+            } else {
+               displayMessage("DUH! WTF?");
+            }            
+         }
+
+         function checkScore() {
+            if (! hasVisitedLoc0) {            
+               if (currentLoc === 0) {
+                  score = score + 5;
+                  hasVisitedLoc0 = true;
+               }
+            } else if ( (! hasVisitedLoc1) && (currentLoc === 1) ) {            
+                  score = score + 5;
+                  hasVisitedLoc1 = true;
+            } else if ( (! hasVisitedLoc2) && (currentLoc === 2) ) {            
+                  score = score + 5;
+                  hasVisitedLoc2 = true;
+            } else if ( (! hasVisitedLoc3) && (currentLoc === 3) ) {            
+                  score = score + 5;
+                  hasVisitedLoc3 = true;
+            } else if ( (! hasVisitedLoc4) && (currentLoc === 4) ) {            
+                  score = score + 5;
+                  hasVisitedLoc4 = true;
+            }            
+         }
+
+         //
+         // Utility Function(s)
+         //
+         function displayMessage(msg) {
+            var target = document.getElementById("taMain");
+            target.value = msg + "\n\n" + target.value;
+         }
+      </script>
+   </head>
+   <body onload="init();">
+       <textarea id="taMain" rows="8" cols="32"></textarea>
+       
+       <br>
+       Command:       
+       <input type="text" 
+              id = "txtCommand"
+              name="txtCommand">
+
+       <input type="button"
+              value="Go" 
+              onclick="btnGo_click();" />                           
+       
+       <br>
+       <input type="button" 
+              value="North"
+              onclick="btnNorth_click();">
+       <input type="button" 
+              value="South"
+              onclick="btnSouth_click();">
+       <input type="button" 
+              value="East"
+              onclick="btnEast_click();">
+       <input type="button" 
+              value="West"
+              onclick="btnWest_click();">
+              
+   </body>
+</html>

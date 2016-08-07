@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+   <head>
+      <title>
+         HAL: The Goofy AI
+      </title>
+      <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+      <script type="text/javascript">
+
+         /*
+            The logic(?) of HAL the goofy AI.
+         */
+         function btnGo_click() {
+            var userQuestion = document.getElementById("txtCommand").value;
+            var response = "";
+                        
+            if (userQuestion === "Hello") {
+               response = "How are you?";
+            } else {
+               if (userQuestion === "I am fine") {
+                  response = "Really?";
+               } else {
+                  response = "What?";
+               }
+            }
+            document.getElementById("taAnswer").value = response;
+         }
+                  
+
+         /*
+            Show the difference between == and ===.
+         */
+         function equalTester() {
+            var a = 16;
+            document.getElementById("taAnswer").value = "a = 16;\n";
+            
+            if (a == "16") {
+               document.getElementById("taAnswer").value += "a == '16'\n";
+            } else {
+               document.getElementById("taAnswer").value += "a != '16'\n";
+            }
+            
+            if (a === "16") {
+               document.getElementById("taAnswer").value += "a === '16'\n";
+            } else {
+               document.getElementById("taAnswer").value += "a !== '16'\n";
+            }            
+         }
+      </script>
+   </head>
+   <body>
+       <br>
+       Q:
+       <input type="text"
+              id = "txtCommand"
+              name="txtCommand">
+       <input type="button"
+              value="Go"
+              onclick="btnGo_click();" />
+       <input type="button"
+              value="Test the difference between == and ==="
+              onclick="equalTester();" />
+              
+       <br>
+       A: 
+       <textarea rows="10" cols="40" id="taAnswer"></textarea>
+              
+   </body>
+</html>
